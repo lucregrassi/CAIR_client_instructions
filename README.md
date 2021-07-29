@@ -2,9 +2,9 @@
 This repository contains a simple Python script that allows everyone to interact with the CAIR server.  
 By running the script you can have an entertaining dialogue with our system for autonomous conversation.
 
-**Requirements**: Make sure you have Python3 installed on your device.
+**Requirements**: make sure you have Python 3.x installed on your device.
 
-**Note**: no data related to the client is stored on the server.
+**Note**: as the server is implemented as a REST API, no data related to the client is stored on the server.
 
 ## How does it work?
 Launch the script by opening the terminal in the script folder and typing:
