@@ -42,6 +42,7 @@ def main():
         response = requests.get(BASE + "CAIR_dialogue/" + sentence, data=json.dumps(client_state), verify=False)
         # Update the client state data structure with the one contained in the response
         client_state = response.json()['state']
+        # print(client_state)
         # Update the client state in the file
         with open("state.txt", 'wb') as cl_state:
             pickle.dump(client_state, cl_state)
