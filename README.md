@@ -36,6 +36,8 @@ The updated client state is immediately stored in the *state.txt*, while the str
 * The *plan* is the actual sequence of actions and related parameters that the client should execute following a user request
 * The *reply* is the reply of the system
 
+**Note**: to delete all client data and restart the conversation from zero, it is sufficient to remove the *state.txt* file before launching the script.
+
 ## How can you develop your custom client?
 A client for the CAIR server can be developed for any device equipped with a microphone/keyboard and a speaked/screen to acquire and provide speech or text.  
 The example script provided in this repository can be used as a starting point for implementing a client for any device.  
