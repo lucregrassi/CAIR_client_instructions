@@ -6,11 +6,11 @@ By running the script you can have an entertaining dialogue with our system for 
 ```
 Python 3.x
 pip
-requirements
+requests
 ```
 The latest stable version of Python 3 can be downloaded from the official website: [download Python 3.9.6](https://www.python.org/downloads/release/python-396/).   
 Usually, pip is automatically installed along with Python. However, if you have Python but not pip, you can install it by following this guide: [pip documentation](https://pip.pypa.io/en/stable/installation/).  
-To install the requirements package, opent the terminal and type:
+To install the requests package, opent the terminal and type:
 ```
 pip install requests
 ```
