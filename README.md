@@ -2,14 +2,25 @@
 This repository contains a simple Python script that allows everyone to interact with the CAIR server.  
 By running the script you can have an entertaining dialogue with our system for autonomous conversation.
 
-**Requirements**: make sure you have Python 3.x installed on your device.
+**Requirements**: 
+```
+Python 3.x
+pip
+requirements
+```
+The latest stable version of Python 3 can be downloaded from the official website: [download Python 3.9.6](https://www.python.org/downloads/release/python-396/).   
+Usually, pip is automatically installed along with Python. However, if you have Python but not pip, you can install it by following this guide: [pip documentation](https://pip.pypa.io/en/stable/installation/).  
+To install the requirements package, opent the terminal and type:
+```
+pip install requests
+```
 
 **Note**: as the server is implemented as a REST API, no data related to the client is stored on the server.
 
 ## How does it work?
 Launch the script by opening the terminal in the script folder and typing:
 ```
-$ python3 CAIR_client_example.py
+$ python CAIR_client_example.py
 ```
 The first thing that the script does is to check if a file called *state.txt* exists in the same folder of the script. 
 * If no file is present, the script assumes that the client is new and it has never made a request to the server.  
