@@ -18,7 +18,7 @@ BASE = "http://" + server_IP + ":5005/"
 
 # If the client is new create a file in which its state will be stored
 if not os.path.exists("state.txt"):
-    resp = requests.put(BASE + "CAIR_dialogue", verify=False)
+    resp = requests.put(BASE + "CAIR_server", verify=False)
     state = resp.json()['state']
     # Save the client state contained in the response in a file
     with open("state.txt", 'wb') as f:
@@ -39,7 +39,7 @@ def main():
         with open("state.txt", 'rb') as cl_state:
             client_state = pickle.load(cl_state)
         # Perform the request to the server, sending both the sentence and the client state
-        response = requests.get(BASE + "CAIR_dialogue/" + sentence, data=json.dumps(client_state), verify=False)
+        response = requests.get(BASE + "CAIR_server/" + sentence, data=json.dumps(client_state), verify=False)
         # Update the client state data structure with the one contained in the response
         client_state = response.json()['state']
         # print(client_state)
