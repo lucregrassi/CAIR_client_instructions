@@ -54,7 +54,7 @@ A client for the CAIR server can be developed for any device equipped with a mic
 The example script provided in this repository can be used as a starting point for implementing a client for any device.  
 The only thing that should be customized is the way in which the client performs the actions contained in the **plan** field of the response to the GET request.
 
-For the complete list of actions and parameters consult the following guide: <pdf con lista di tutti gli intent + trigger sentences + plan>
+For the current list of Intents with their actions and corresponding parameters consult the following guide: *********
 
 For an example of client for the SoftBank Robotics' Pepper and Nao robots that manages all the actions received by the server, please refer to: https://github.com/lucregrassi/CAIRclient
 
