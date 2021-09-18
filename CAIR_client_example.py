@@ -14,7 +14,7 @@ import json
 
 # Location of the server
 server_IP = "131.175.198.134"
-BASE = "http://" + server_IP + ":5005/"
+BASE = "http://" + server_IP + ":5000/"
 
 # If the client is new create a file in which its state will be stored
 if not os.path.exists("state.txt"):
