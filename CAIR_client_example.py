@@ -16,7 +16,7 @@ import zlib
 
 # Location of the API (the server it is running on)
 server_IP = "131.175.205.146"
-BASE = "http://" + server_IP + ":50000/CAIR_hub"
+BASE = "http://" + server_IP + ":5000/CAIR_hub"
 
 
 def retrieve_user_state():
