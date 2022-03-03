@@ -11,55 +11,57 @@ import requests
 import os
 import pickle
 import json
+import time
+import zlib
 
-# Location of the server
-server_IP = "131.175.198.134"
-BASE = "http://" + server_IP + ":5000/"
-
-# If the client is new create a file in which its state will be stored
-if not os.path.exists("state.txt"):
-    resp = requests.put(BASE + "CAIR_server", verify=False)
-    state = resp.json()['client_state']
-    # Save the client state contained in the response in a file
-    with open("state.txt", 'wb') as f:
-        pickle.dump(state, f)
-    # Welcome the user and start the conversation
-    print("S: Welcome to CAIR!")
-    print("S:", resp.json()['reply'])
-# If the client is not new start the conversation
-else:
-    print("S: I missed you. What would you like to talk about?")
+# Location of the API (the server it is running on)
+server_IP = "131.175.205.146"
+BASE = "http://" + server_IP + ":50000/CAIR_hub"
 
 
-def main():
+def retrieve_user_state():
+    resp = requests.put(BASE, verify=False)
+    dialogue_state = resp.json()['dialogue_state']
+    if not dialogue_state:
+        print("S: Waiting for CAIR_dialogue service...")
+        # Keep on trying to perform requests to the server until it is reachable.
+        while not dialogue_state:
+            resp = requests.put(BASE, verify=False)
+            dialogue_state = resp.json()['dialogue_state']
+            time.sleep(1)
+    # If the client is not new
+    if os.path.exists("dialogue_state.txt"):
+        print("S: Welcome back!")
+        print("S: I missed you. What would you like to talk about?")
+    else:
+        with open("dialogue_state.txt", 'wb') as f:
+            pickle.dump(dialogue_state, f)
+        print("S: Hey, you're new!")
+        print("S:", resp.json()['reply'])
+
+
+def start_dialogue():
     while True:
-        # Wait for the user to write something
         sentence = input("U: ")
         # Load the array containing all information about the state of the client
-        with open("state.txt", 'rb') as cl_state:
-            client_state = pickle.load(cl_state)
-        # Perform the request to the server, sending both the sentence and the client state
-        response = requests.get(BASE + "CAIR_server/" + sentence, data=json.dumps(client_state), verify=False)
-        # Update the client state data structure with the one contained in the response
-        client_state = response.json()['client_state']
-        # print(client_state)
-        # Update the client state in the file
-        with open("state.txt", 'wb') as cl_state:
-            pickle.dump(client_state, cl_state)
-        # Retrieve the other fields of the server response
+        with open("dialogue_state.txt", 'rb') as cl_state:
+            dialogue_state = pickle.load(cl_state)
+        data = {"sentence": sentence, "dialogue_state": dialogue_state}
+        encoded_data = json.dumps(data).encode('utf-8')
+        compressed_data = zlib.compress(encoded_data)
+        response = requests.get(BASE, data=compressed_data, verify=False)
+        dialogue_state = response.json()['dialogue_state']
+        if dialogue_state:
+            with open("dialogue_state.txt", 'wb') as cl_state:
+                pickle.dump(dialogue_state, cl_state)
         intent_reply = response.json()['intent_reply']
         plan = response.json()['plan']
         reply = response.json()['reply']
 
-        if intent_reply:
-            if plan:
-                reply = intent_reply + " " + plan + " " + reply
-            else:
-                reply = intent_reply + " " + reply
-
-        # Print the reply
+        reply = intent_reply + " " + plan + " " + reply
         print("S:", reply)
 
 
 if __name__ == '__main__':
-    main()
+    retrieve_user_state()
+    start_dialogue()
