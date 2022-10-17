@@ -22,7 +22,7 @@ Launch the script by opening the terminal in the script folder and typing:
 ```
 $ python CAIRclient.py
 ```
-The first thing that the script does is to check if a file called *dialogue_state.txt* exists in the same folder of the script. 
+The first thing that the script does is to check if a file called *dialogue_state.json* exists in the same folder of the script. 
 * If no file is present, the script assumes that the client is new and it has never made a request to the server.  
   A GET request is performed to the server to get the initial state and start the conversation. This request does not require any parameter.  
   The json response contains two fields:
