@@ -24,35 +24,35 @@ $ python CAIRclient.py
 ```
 The first thing that the script does is to check if a file called *dialogue_state.txt* exists in the same folder of the script. 
 * If no file is present, the script assumes that the client is new and it has never made a request to the server.  
-  A PUT request is performed to the server to get the initial state and start the conversation. This request does not require any parameter.  
+  A GET request is performed to the server to get the initial state and start the conversation. This request does not require any parameter.  
   The json response contains two fields:
   ```
   dialogue_state
-  reply
+  first_sentence
   ```
-  The script creates the **state.txt** file and stores the received initial client state in it, then a welcome message and the first server sentence are shown to the user.
+  The script creates the **dialogue_state.json** file and stores the received initial client state in it, then a welcome message and the first server sentence are shown to the user.
 * If the file is already present, it means that the client has already interacted with the server and its last state is stored in this file.  
   In this case, the script just shows a welcome back message and it encourages the user to talk about something.
   
-Each time the user writes something, the script retrieves the client data from the *state.txt* file and performs a GET request to the server. This request expects the sentence as parameter and the client state as additional data which is then used by the server to provide the appropriate response.  
-The response provided by the GET request contains four fields:
+Each time the user writes something, the script retrieves the client data from the *dialogue_state.json* file and performs a PUT request to the server. This request expects the sentence as parameter and the client state as additional data which is then used by the server to provide the appropriate response.  
+The response provided by the PUT request contains four fields:
 ```
 dialogue_state
-intent_reply
+plan_sentence
 plan
-reply
+dialogue_sentence
 ```
-The updated client state is immediately stored in the *state.txt*, while the strings contained in the other three fields are used to make up the sentence which is then shown to the user. In particular:
-* The *intent_reply* is a specific response to the user request of executing a task 
+The updated client state is immediately stored in the *dialogue_state.json*, while the strings contained in the other three fields are used to make up the sentence which is then shown to the user. In particular:
+* The *plan_sentence* is a specific response to the user request of executing a task 
 * The *plan* is the actual sequence of actions and related parameters that the client should execute following a user request
-* The *reply* is the reply of the system
+* The *dialogue_sentence* is the reply of the system
 
-**Note**: to delete all client data and restart the conversation from zero, it is sufficient to remove the *state.txt* file before launching the script.
+**Note**: to delete all client data and restart the conversation from zero, it is sufficient to remove the *dialogue_state.json* file before launching the script.
 
 ## How can you develop your custom client?
 A client for the CAIR server can be developed for any device equipped with a microphone/keyboard and a speaker/screen to acquire and provide speech or text.  
 The example script provided in this repository can be used as a starting point for implementing a client for any device.  
-The only thing that should be customized is the way in which the client performs the actions contained in the **plan** field of the response to the GET request.
+The only thing that should be customized is the way in which the client performs the actions contained in the **plan** field of the response to the PUT request.
 
 For the current list of Intents with their plan and corresponding parameters consult Chapter 2.1 of the following guide: [CAIR_Developer_Guide_Plans.pdf](https://github.com/lucregrassi/CAIRclient_example/files/7039311/CAIR_Developer_Guide_Plans.pdf)
 
